@@ -13,10 +13,22 @@ public class swirl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		for(int i = 0; i < 7; i++)
+		for(int i = 0; i < plates.Length; i++)
         {
-            float j = Random.Range(-0.1f,0.1f);
-            plates[i].gameObject.transform.localScale += new Vector3(j, 0, j);
+            if (plates[i].gameObject.transform.localScale.x >= 7.0f)
+            {
+                plates[i].gameObject.transform.localScale += new Vector3(-0.1f, 0, -0.1f);
+            }
+            else if (plates[i].gameObject.transform.localScale.x <= 0.5f)
+            {
+                plates[i].gameObject.transform.localScale += new Vector3(0.1f, 0, 0.1f);
+            }
+            else
+            {
+                float j = Random.Range(-100f,100f);
+                j = j * 0.0005f;
+                plates[i].gameObject.transform.localScale += new Vector3(j, 0, j);
+            }
         }
 	}
 }
