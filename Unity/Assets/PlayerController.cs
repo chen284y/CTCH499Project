@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
         motor.Move(velocity);
 
         float yRot = Input.GetAxisRaw("Mouse X");
+        float t = transform.eulerAngles.z;
 
         Vector3 rotation = new Vector3(0f, yRot, 0f) * lookSens;
 
