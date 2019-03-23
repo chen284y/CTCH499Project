@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
         motor.Rotate(rotation);
 
         float xRot = Input.GetAxisRaw("Mouse Y");
+        
 
         Vector3 camrotation = new Vector3(xRot, 0f, 0f) * lookSens;
 

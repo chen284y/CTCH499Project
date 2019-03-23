@@ -10,7 +10,7 @@ public class PlayerMotor : MonoBehaviour {
     [SerializeField]
     private GameObject cam;
 
-    Animator anim;
+    //Animator anim;
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 rotation = Vector3.zero;
@@ -21,7 +21,7 @@ public class PlayerMotor : MonoBehaviour {
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
 
     }
 
@@ -48,14 +48,15 @@ public class PlayerMotor : MonoBehaviour {
 
     void PerformMovement()
     {
+        
         if(velocity != Vector3.zero)
         {
             rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
-            anim.SetInteger("condition", 1);
+            //anim.SetInteger("condition", 1);
         }
         else
         {
-            anim.SetInteger("condition", 0);
+            //anim.SetInteger("condition", 0);
         }
     }
 
