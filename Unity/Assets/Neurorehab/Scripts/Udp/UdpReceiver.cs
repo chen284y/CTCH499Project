@@ -4,6 +4,12 @@ using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
 
+public static class GlobalVariables
+{
+    public static float ShortTermExcitement = 0;
+    public static int PublicStatus = 0;
+}
+
 namespace Neurorehab.Scripts.Udp
 {
     /// <summary>
@@ -101,7 +107,13 @@ namespace Neurorehab.Scripts.Udp
 
             if (message == string.Empty) return;
 
+            //GlobalVariables.ShortTermExcitement = message;
             //Debug.Log(message);
+            string[] messageList = message.Split(',');
+            string[] result = messageList[4].Split(';');
+            //Debug.Log(float.Parse(result[0]));
+            GlobalVariables.ShortTermExcitement = float.Parse(result[0]);
+
             try
             {
                 message = message.ToLower();

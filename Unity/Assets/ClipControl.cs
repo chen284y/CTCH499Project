@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityStandardAssets.ImageEffects;
 
 
 public class ClipControl : MonoBehaviour {
@@ -17,17 +17,30 @@ public class ClipControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(camera.farClipPlane <= 30)
-        camera.farClipPlane = camera.farClipPlane + 0.01f;
+        if (GlobalVariables.ShortTermExcitement <= 0.70f)
+        {
+            if (camera.farClipPlane <= 30)
+                camera.farClipPlane = camera.farClipPlane + 0.01f;
+        }
+        else if(GlobalVariables.ShortTermExcitement >= 0.70f)
+        {
+            if(camera.farClipPlane >= 10)
+                camera.farClipPlane = camera.farClipPlane - 0.01f;
+        }
         camt = camera.transform.forward;
-
+        Debug.Log("Received: " + GlobalVariables.ShortTermExcitement);
         move();
+
+        if(GlobalVariables.PublicStatus == 1)
+        {
+            camera.GetComponent<BloomAndFlares>().bloomThreshold += 0.001f;     
+        }
     }
 
 
     void move()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         
         if (Input.GetKey(KeyCode.W))
         {
