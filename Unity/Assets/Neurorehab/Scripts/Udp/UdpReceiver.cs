@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class GlobalVariables
 {
-    public static float ShortTermExcitement = 0;
+    public static float ShortTermExcitement = 0.7f;
     public static int PublicStatus = 0;
 }
 
