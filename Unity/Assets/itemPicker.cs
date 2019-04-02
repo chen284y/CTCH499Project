@@ -8,7 +8,7 @@ public class itemPicker : MonoBehaviour {
 
     [SerializeField]
     private Camera camera1;
-    public Slider canvas1;
+    public Canvas canvas1;
 
     void OnTriggerEnter(Collider collider)
     {
@@ -16,8 +16,9 @@ public class itemPicker : MonoBehaviour {
         camera1.GetComponent<EdgeDetectionColor>().enabled = false;
         camera1.GetComponent<BloomAndFlares>().enabled = true;
         camera1.GetComponent <VignetteAndChromaticAberration>().enabled = true;
+        camera1.farClipPlane = 2000;
         GlobalVariables.PublicStatus = 1;
-        Destroy(canvas1);
+        canvas1.enabled = false;
         Destroy(gameObject);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.ImageEffects;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -61,6 +62,11 @@ public class ClipControl : MonoBehaviour {
         if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(camt.x * -0.025f, 0f, camt.z * -0.025f);
+        }
+        if(Input.GetKey(KeyCode.R))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
         }
         /*
         if (Input.GetKey(KeyCode.A))
