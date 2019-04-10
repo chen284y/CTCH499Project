@@ -5,9 +5,13 @@ using UnityStandardAssets.ImageEffects;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Valve.VR;
 
 
 public class ClipControl : MonoBehaviour {
+
+    public SteamVR_Input_Sources LeftInputSource = SteamVR_Input_Sources.LeftHand;
+    public SteamVR_Input_Sources RightInputSource = SteamVR_Input_Sources.RightHand;
 
     [SerializeField]
     private Camera camera;
@@ -19,15 +23,24 @@ public class ClipControl : MonoBehaviour {
     public TextMeshProUGUI valueText, rangeText;
     // Use this for initialization
     Vector3 camt;
+    private AudioSource source;
+    public AudioClip walking;
+    public AudioClip Idle = null;
+
+    bool playing = false;
 
     void Start () {
+        source = GetComponent<AudioSource>();
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        playing = false;
         if (GlobalVariables.ShortTermExcitement <= 0.40f)
         {
+        
             if (camera.farClipPlane <= 30)
                 camera.farClipPlane = camera.farClipPlane + 0.01f;
         }
@@ -43,9 +56,20 @@ public class ClipControl : MonoBehaviour {
         Debug.Log("Received: " + GlobalVariables.ShortTermExcitement);
         move();
 
-        if(GlobalVariables.PublicStatus == 1)
+        if(GlobalVariables.PublicStatus == 1 && camera.GetComponent<BloomAndFlares>().bloomThreshold <= 10)
         {
             camera.GetComponent<BloomAndFlares>().bloomThreshold += 0.001f;     
+        }
+
+        if (playing && source.clip != walking)
+        {
+            source.clip = walking;
+            source.Play();
+        }
+        else if (!playing && source.clip != Idle)
+        {
+            source.clip = Idle;
+            source.Play();
         }
     }
 
@@ -53,17 +77,36 @@ public class ClipControl : MonoBehaviour {
     void move()
     {
         //Cursor.lockState = CursorLockMode.Locked;
+
         
+
+
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(camt.x*0.04f,0f,camt.z*0.04f);
+            playing = true;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(camt.x * -0.025f, 0f, camt.z * -0.025f);
+            playing = true;
         }
-        if(Input.GetKey(KeyCode.R))
+
+        if (SteamVR_Actions._default.Squeeze.GetAxis(RightInputSource) > 0.03f)
+        {
+            transform.Translate(camt.x * 0.04f, 0f, camt.z * 0.04f);
+            playing = true;
+        }
+
+        if (SteamVR_Actions._default.Squeeze.GetAxis(LeftInputSource) > 0.03f)
+        {
+            transform.Translate(camt.x * -0.025f, 0f, camt.z * -0.025f);
+            playing = true;
+        }
+
+
+        if (Input.GetKey(KeyCode.R))
         {
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
