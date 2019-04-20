@@ -41,7 +41,7 @@ public class ClipControl : MonoBehaviour {
         if (GlobalVariables.ShortTermExcitement <= 0.40f)
         {
         
-            if (camera.farClipPlane <= 30)
+            if (camera.farClipPlane <= 40)
                 camera.farClipPlane = camera.farClipPlane + 0.01f;
         }
         else if(GlobalVariables.ShortTermExcitement >= 0.80f)
@@ -71,6 +71,7 @@ public class ClipControl : MonoBehaviour {
             source.clip = Idle;
             source.Play();
         }
+        
     }
 
 
@@ -83,31 +84,33 @@ public class ClipControl : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(camt.x*0.04f,0f,camt.z*0.04f);
+            transform.Translate(camt.x*0.07f*(Time.deltaTime / 0.025f),0f,camt.z*0.04f * (Time.deltaTime / 0.025f));
             playing = true;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(camt.x * -0.025f, 0f, camt.z * -0.025f);
+            transform.Translate(camt.x * -0.04f * (Time.deltaTime / 0.025f), 0f, camt.z * -0.025f * (Time.deltaTime / 0.025f));
             playing = true;
         }
 
         if (SteamVR_Actions._default.Squeeze.GetAxis(RightInputSource) > 0.03f)
         {
-            transform.Translate(camt.x * 0.04f, 0f, camt.z * 0.04f);
+            transform.Translate(camt.x * 0.07f * (Time.deltaTime / 0.025f), 0f, camt.z * 0.04f * (Time.deltaTime / 0.025f));
             playing = true;
         }
 
         if (SteamVR_Actions._default.Squeeze.GetAxis(LeftInputSource) > 0.03f)
         {
-            transform.Translate(camt.x * -0.025f, 0f, camt.z * -0.025f);
+            transform.Translate(camt.x * -0.04f * (Time.deltaTime / 0.025f), 0f, camt.z * -0.025f * (Time.deltaTime / 0.025f));
             playing = true;
         }
 
 
         if (Input.GetKey(KeyCode.R))
         {
+            GlobalVariables.PublicStatus = 0;
+            camera.GetComponent<BloomAndFlares>().bloomThreshold = 0;
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }

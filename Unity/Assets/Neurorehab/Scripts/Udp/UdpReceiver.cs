@@ -73,7 +73,7 @@ namespace Neurorehab.Scripts.Udp
         {  
             if (_isConnected) return;
 
-            Debug.Log("Init");
+            //Debug.Log("Init");
             _isConnected = true;
             UdpGenericTranslator.InitializeTranslator();
 
